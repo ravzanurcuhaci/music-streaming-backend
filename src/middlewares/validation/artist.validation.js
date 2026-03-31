@@ -23,12 +23,15 @@ function validateCreateArtist(req, res, next) {
 
     next();
 }
-
 function validateUpdateArtist(req, res, next) {
-    const { name } = req.body;
+    const { bio, country } = req.body;
 
-    if (isEmpty(name) || name.trim() === '') {
-        return validationError(res, 'Name is required');
+    if (isEmpty(bio) || bio.trim() === '') {
+        return validationError(res, 'Bio is required');
+    }
+
+    if (isEmpty(country) || country.trim() === '') {
+        return validationError(res, 'Country is required');
     }
 
     next();

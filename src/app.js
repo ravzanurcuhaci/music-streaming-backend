@@ -1,4 +1,5 @@
 //Express uygulamasını ayağa kaldırır
+require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const authRoutes = require('./routes/auth.routes');
@@ -6,12 +7,15 @@ const songRoutes = require('./routes/song.routes');
 const playlistRoutes = require('./routes/playlist.routes');
 const artistRoutes = require('./routes/artist.route');
 const playlistSongRoutes = require('./routes/playlist_song.route');
+const listeningHistoryRoutes = require('./routes/listening_history.route');
+const albumRoutes = require('./routes/album.route');
 const errorHandler = require('./middlewares/errorHandler');
 
 const app = express();
 
 app.use(cors());
 app.use(express.json());
+
 
 app.get('/', (req, res) => {
     res.json({
@@ -24,5 +28,7 @@ app.use('/songs', songRoutes);
 app.use('/playlists', playlistRoutes);
 app.use('/artists', artistRoutes);
 app.use('/playlist-songs', playlistSongRoutes);
+app.use('/listening-history', listeningHistoryRoutes);
+app.use('/albums', albumRoutes);
 app.use(errorHandler);
 module.exports = app;

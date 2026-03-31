@@ -1,4 +1,17 @@
 const { isEmpty, isValidEmail, isPositiveNumber, validationError } = require('./helpers');
+function validateUserId(req, res, next) {
+    const { id } = req.params;
+
+    if (isEmpty(id) || id.trim() === '') {
+        return validationError(res, 'User ID is required');
+    }
+
+    if (!isPositiveNumber(id)) {
+        return validationError(res, 'User ID must be a positive number');
+    }
+
+    next();
+}
 
 function validateRegister(req, res, next) {
     const { username, email, password } = req.body;
@@ -43,17 +56,8 @@ function validateLogin(req, res, next) {
 
     next();
 }
-
 function validateChangePassword(req, res, next) {
-    const { userId, oldPassword, newPassword } = req.body;
-
-    if (isEmpty(userId)) {
-        return validationError(res, 'UserId is required');
-    }
-
-    if (!isPositiveNumber(userId)) {
-        return validationError(res, 'UserId must be a positive number');
-    }
+    const { oldPassword, newPassword } = req.body;
 
     if (isEmpty(oldPassword) || oldPassword.trim() === '') {
         return validationError(res, 'Old password is required');
@@ -71,6 +75,7 @@ function validateChangePassword(req, res, next) {
 }
 
 module.exports = {
+    validateUserId,
     validateRegister,
     validateLogin,
     validateChangePassword,

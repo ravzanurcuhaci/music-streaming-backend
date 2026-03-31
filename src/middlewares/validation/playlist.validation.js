@@ -15,15 +15,8 @@ function validatePlaylistId(req, res, next) {
 }
 
 function validateCreatePlaylist(req, res, next) {
-    const { userId, title, isPublic } = req.body;
+    const { title, isPublic } = req.body;
 
-    if (isEmpty(userId)) {
-        return validationError(res, 'UserId is required');
-    }
-
-    if (!isPositiveNumber(userId)) {
-        return validationError(res, 'UserId must be a positive number');
-    }
 
     if (isEmpty(title) || title.trim() === '') {
         return validationError(res, 'Title is required');

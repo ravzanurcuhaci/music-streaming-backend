@@ -71,10 +71,38 @@ const deleteArtist = async (req, res, next) => {
         next(error);
     }
 };
+const getTopArtists = async (req, res, next) => {
+    try {
+        const artists = await artistService.getTopArtists();
+
+        return res.status(200).json({
+            success: true,
+            data: artists,
+        });
+    } catch (error) {
+        next(error);
+    }
+};
+const getArtistAlbums = async (req, res, next) => {
+    try {
+        const { id } = req.params;
+
+        const albums = await artistService.getArtistAlbums(id);
+
+        return res.status(200).json({
+            success: true,
+            data: albums,
+        });
+    } catch (error) {
+        next(error);
+    }
+};
 
 module.exports = {
     getArtistDetail,
     createArtist,
     updateArtist,
     deleteArtist,
+    getTopArtists,
+    getArtistAlbums,
 };

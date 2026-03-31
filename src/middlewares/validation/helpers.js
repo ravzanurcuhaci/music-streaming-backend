@@ -8,6 +8,15 @@ function isEmpty(value) {
     return value === undefined || value === null || value === '';
 }
 
+function isString(value) {
+    return typeof value === 'string';
+}
+
+function isInt(value) {
+    return Number.isInteger(Number(value));
+}
+
+
 // Değerin pozitif bir sayı olup olmadığını kontrol eder
 function isPositiveNumber(value) {
     return !isNaN(Number(value)) && Number(value) > 0;
@@ -37,5 +46,7 @@ module.exports = {
     isEmpty,
     isPositiveNumber,
     isValidEmail,
+    isString,
     validationError,
+    isInt,
 };

@@ -32,9 +32,18 @@ const deletePlaylist = async (playlistId) => {
     return result.rows[0];
 };
 
+const getPlaylistSongs = async (playlistId) => {
+    const query = 'SELECT * FROM public.fn_get_playlist_songs($1)';
+    const values = [playlistId];
+
+    const result = await pool.query(query, values);
+    return result.rows;
+};
+
 module.exports = {
     getPlaylistDetail,
     createPlaylist,
     updatePlaylist,
     deletePlaylist,
+    getPlaylistSongs,
 };

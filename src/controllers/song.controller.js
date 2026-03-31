@@ -37,9 +37,10 @@ const createSong = async (req, res, next) => {
 };
 
 const updateSong = async (req, res, next) => {
+    console.log('controller bug', req.body);
     try {
         const { id } = req.params;
-        const { artistId, title, albumId, durationSeconds, trackNumber } = req.body;
+        const { artistId, title, albumId, durationSeconds, trackNumber } = req.body || {};
 
         const song = await songService.updateSong({
             songId: id,
@@ -73,10 +74,45 @@ const deleteSong = async (req, res, next) => {
         next(error);
     }
 };
+
+const getTopSongs = async (req, res, next) => {
+    console.log('controller bug', req.body);
+    try {
+        const songs = await songService.getTopSongs();
+
+        return res.status(200).json({
+            success: true,
+            data: songs,
+        });
+    } catch (error) {
+        next(error);
+    }
+};
+
+const getRelatedSongs = async (req, res, next) => {
+    try {
+        const { id } = req.params;
+
+        const songs = await songService.getRelatedSongs(id);
+        return res.status(200).json({
+            success: true,
+            data: songs,
+        });
+    } catch (error) {
+        next(error);
+    }
+};
+
+
+
+
+
 //fonksiyonları dışarı açarak diğer dosyalardan erişilebilir hale getiriyoruz
 module.exports = {
     getSongDetail,
     createSong,
     updateSong,
     deleteSong,
+    getTopSongs,
+    getRelatedSongs,
 };

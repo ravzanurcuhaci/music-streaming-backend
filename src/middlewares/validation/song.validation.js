@@ -1,5 +1,6 @@
 const { isEmpty, isPositiveNumber, validationError } = require('./helpers');
 
+
 function validateSongId(req, res, next) {
     const { id } = req.params;
 
@@ -49,7 +50,9 @@ function validateCreateSong(req, res, next) {
 }
 
 function validateUpdateSong(req, res, next) {
-    const { artistId, title, albumId, durationSeconds, trackNumber } = req.body;
+    console.log('validation bug', req.body);
+
+    const { artistId, title, albumId, durationSeconds, trackNumber } = req.body || {};
 
     if (isEmpty(title) || title.trim() === '') {
         return validationError(res, 'Title is required');
@@ -81,6 +84,9 @@ function validateUpdateSong(req, res, next) {
 
     next();
 }
+
+
+
 
 module.exports = {
     validateSongId,

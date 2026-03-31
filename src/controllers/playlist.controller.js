@@ -1,3 +1,4 @@
+const { get } = require('../routes/song.routes');
 const playlistService = require('../services/playlist.service');
 
 const getPlaylistDetail = async (req, res, next) => {
@@ -17,7 +18,8 @@ const getPlaylistDetail = async (req, res, next) => {
 
 const createPlaylist = async (req, res, next) => {
     try {
-        const { userId, title, description, isPublic } = req.body;
+        const userId = req.user.id; // 🔥 JWT’den geliyor
+        const { title, description, isPublic = true } = req.body;
 
         const playlist = await playlistService.createPlaylist({
             userId,
@@ -72,9 +74,25 @@ const deletePlaylist = async (req, res, next) => {
     }
 };
 
+const getPlaylistSongs = async (req, res, next) => {
+    try {
+        const { id } = req.params;
+
+        const songs = await playlistService.getPlaylistSongs(id);
+
+        return res.status(200).json({
+            success: true,
+            data: songs,
+        });
+    } catch (error) {
+        next(error);
+    }
+};
+
 module.exports = {
     getPlaylistDetail,
     createPlaylist,
     updatePlaylist,
     deletePlaylist,
+    getPlaylistSongs,
 };
